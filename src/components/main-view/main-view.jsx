@@ -24,4 +24,4 @@ export class MainView extends React.Component {
       {movies.map(movie => <MovieCard key={movie._id} movie={movie}/>)}
       </div>
     );
-  }
+  }}
