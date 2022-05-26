@@ -2,6 +2,7 @@ import React from 'react';
 import { MovieCard } from '../movie-card/movie-card';
 
 export class MainView extends React.Component {
+
   constructor(){
     super();
     this.state = {
@@ -20,7 +21,8 @@ export class MainView extends React.Component {
   
     return (
       <div className="main-view">
-      {movies.map(movie => <MovieCard key={movie._id} movie={movie}/>)}
+        {movies.map(movie => <div key={movie._id}>{movie.Title}</div>)}
       </div>
     );
-  }}
+  }
+}
