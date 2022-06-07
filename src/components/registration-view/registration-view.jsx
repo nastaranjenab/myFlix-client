@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 //user registration form taking necessary user details
 export function RegistrationView(props) {
@@ -53,3 +54,12 @@ export function RegistrationView(props) {
     </form>
   );
 }
+
+RegistrationView.propTypes = {
+    user: PropTypes.exact({
+      username: PropTypes.string.isRequired,
+      password: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
+      birthday: PropTypes.string.isRequired
+    }).isRequired,
+  };
