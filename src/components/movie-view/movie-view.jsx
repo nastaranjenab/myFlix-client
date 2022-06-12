@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Col from 'react-bootstrap/Col';
 
 export class MovieView extends React.Component {
 
@@ -9,7 +10,7 @@ export class MovieView extends React.Component {
     return (
       <div className="movie-view">
         <div className="movie-poster">
-          <img src={movie.ImagePath} />
+          <img src={movie.ImagePath} crossOrigin="anonymous" />
         </div>
         <div className="movie-title">
           <span className="label">Title: </span>
