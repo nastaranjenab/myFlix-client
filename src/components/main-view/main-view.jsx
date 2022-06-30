@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
-
+import { RegistrationView } from "../registration-view/registration-view";
 import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
-import { RegistrationView } from '../registration-view/registration-view';
+
 
 export class MainView extends React.Component {
 
@@ -23,16 +23,14 @@ export class MainView extends React.Component {
     };
   }
 
-  componentDidMount(){
-    axios.get('https://movieflexworld.herokuapp.com/movies')
-      .then(response => {
-        this.setState({
-          movies: response.data
-        });
-      })
-      .catch(error => {
-        console.log(error);
+  componentDidMount() {
+    let accessToken = localStorage.getItem('token');
+    if (accessToken !== null) {
+      this.setState({
+        user: localStorage.getItem('user')
       });
+      this.getMovies(accessToken);
+    }
   }
 
   /*When a movie is clicked, this function is invoked and updates the state of the `selectedMovie` *property to that movie*/
@@ -45,13 +43,41 @@ export class MainView extends React.Component {
 
 /* When a user successfully logs in, this function updates the `user` property in state to that *particular user*/
 
-  onLoggedIn(user) {
-    this.setState({
-      user
-    });
-  }
+onLoggedIn(authData) {
+  console.log(authData);
+  this.setState({
+    user: authData.user.Username
+  });
 
-   render() {
+  localStorage.setItem('token', authData.token);
+  localStorage.setItem('user', authData.user.Username);
+  this.getMovies(authData.token);
+}
+
+getMovies(token) {
+  axios.get('https://movieflexworld.herokuapp.com/movies', {
+    headers: { Authorization: `Bearer ${token}`}
+  })
+  .then(response => {
+    // Assign the result to the state
+    this.setState({
+      movies: response.data
+    });
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
+
+onLoggedOut() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  this.setState({
+    user: null
+  });
+}
+
+    render() {
     const { movies, selectedMovie, user } = this.state;
 
     /* If there is no user, the LoginView is rendered. If there is a user logged in, the user details are *passed as a prop to the LoginView*/
@@ -70,6 +96,7 @@ export class MainView extends React.Component {
           )
           : movies.map(movie => (
             <Col md={3}>
+              <button onClick={() => { this.onLoggedOut() }}>Logout</button>
               <MovieCard key={movie._id} movie={movie} onMovieClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie); }}/>
             </Col>
           ))
