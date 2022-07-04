@@ -1,24 +1,23 @@
 //color variables
-$buttons-primary: #f8d6fa;
-$buttons-hover: #6ddedc;
-$buttons-delete: #00abc1;
+$buttons-primary: #ffffff;
+$buttons-hover: #355e4f;
+$buttons-delete: #829b90;
 $buttons-delete-darker: #3b756a;
 $backgrounds: #dbdbdb;
-$card-bg: #110307;
+$card-bg: #9f9f9f;
 $text-main: #eeeeee;
-$titles: #cf6dde;
-$titles-hover: #92461a;
-$buttons-primary-text: #141414;
-$borders: #b447cc;
+$titles: #ffffff;
+$titles-hover: #2d3e2f;
+$buttons-primary-text: #6a6a6a;
+$borders: #ffffff;
 
 //google fonts
-@import url("https://fonts.googleapis.com/css2?family=Anek+Tamil&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@1,200&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Anek+Tamil&display=swap");
+
 
 //font variables
-$main-font: "Anek Tamil", sans-serif;
-$titles-font: "Lobster", cursive;
+$main-font: sans-serif;
+$titles-font: sans-serif, cursive;
 
 .card-body,
 .container .card-custom {
