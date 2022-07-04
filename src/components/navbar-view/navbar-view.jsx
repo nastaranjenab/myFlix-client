@@ -1,9 +1,8 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { Navbar, Container, Nav,Button, } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-export function NavBar() {
+export function Menubar() {
   let user = localStorage.getItem("user");
 
   const onLoggedOut = () => {
@@ -23,7 +22,7 @@ export function NavBar() {
   };
 
   return (
-    <Navbar expand="md">
+    <Navbar bg="dark" expand="lg" className="mb-5" >
       <Navbar.Brand as={Link} to={"/"}>
         My-Flix
       </Navbar.Brand>
@@ -46,9 +45,3 @@ export function NavBar() {
     </Navbar>
   );
 }
-
-NavBar.propTypes = {
-  user: PropTypes.shape({
-    Username: PropTypes.string.isRequired,
-  }).isRequired,
-};
