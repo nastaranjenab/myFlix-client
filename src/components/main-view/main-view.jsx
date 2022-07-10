@@ -1,7 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 
+import { connect } from 'react-redux';
+
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+
+import { setMovies, setUser } from "../../actions/actions";
+import MoviesList from "../movies-list/movies-list";
 
 //add react-bootstrap
 import Button from "react-bootstrap/Button";
@@ -15,12 +20,12 @@ import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 
 import { RegistrationView } from "../registration-view/registration-view";
 import { LoginView } from '../login-view/login-view';
-import { MovieCard } from '../movie-card/movie-card';
+//import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
-import { Menubar } from '../navbar-view/navbar-view';
+import { MenuBar } from '../navbar-view/navbar-view';
 import { DirectorView } from '../director-view/director-view';
 import { ProfileView } from '../profile-view/profile-view';
-import { GenreView } from '../director-view/director-view';
+import { GenreView } from '../genre-view/genre-view';
 import { Redirect } from "react-router-dom";
 import "../../index.scss";
 
@@ -29,26 +34,43 @@ export class MainView extends React.Component {
     super();
     this.state = {
       movies: [],
-      selectedMovie: null,
-      registered: null,
+      // selectedMovie: null,
+      // registered: null,
       user: null,
     };
   }
- componentDidMount(){
-      let accessToken = localStorage.getItem('token');
-      if (accessToken !== null) {
-        this.setState({
-          user: localStorage.getItem('user')
+
+  componentDidMount() {
+    let accessToken = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
+    console.log(accessToken);
+    if (accessToken !== null) {
+      console.log("before axios");
+      axios
+        .get(`https://movieflexworld.herokuapp.com/users/${user}`, {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        })
+        .then((res) => {
+          console.log(res);
+          const fullUser = res.data;
+          this.setState({
+            fullUser: fullUser,
+            user: localStorage.getItem("user"),
+          });
+          this.getMovies(accessToken);
+        })
+        .catch(function (error) {
+          console.log(error);
         });
-        this.getMovies(accessToken);
-      }
+    }
   }
 
 
-getMovies(token) {
-  axios.get('https://movieflexworld.herokuapp.com/movies', {
-    headers: { Authorization: `Bearer ${token}`}
-  })
+  getMovies(token) {
+    axios
+      .get("https://movieflexworld.herokuapp.com/movies", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => {
         // Assign the result to the state
         this.setState({
@@ -61,11 +83,11 @@ getMovies(token) {
       });
   }
 
-  setSelectedMovie(newSelectedMovie) {
+  /*setSelectedMovie(newSelectedMovie) {
     this.setState({
       selectedMovie: newSelectedMovie,
     });
-  }
+  }*/
 
 onLoggedIn(authData) {
   console.log(authData);
@@ -86,29 +108,39 @@ onLoggedOut() {
   });
 }
 
+onRegister(registered) {
+  this.setState({
+    registered,
+  });
+}
 
 render() {
-  const { movies, selectedMovie, users, user, registered, director } =
-    this.state;
-  //console.log(this.props);
+  const { movies } = this.state;
+  let { user } = this.state;
 
   return (
-    <Router>
-      <Menubar user={user} />
-      <Row className="main-view justify-content-md-center">
-
-        <Route exact path="/" render={() => {
-          if (!user) return <Col>
-            <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
-          </Col>
-          if (movies.length === 0) return <div className="main-view" />;
-
-          return movies.map(m => (
-            <Col md={6} lg={4} key={m._id}>
-              <MovieCard movie={m} />
-            </Col>
-          ))
-        }} />
+      <Router>
+        <MenuBar user={user} />
+        <Row className="main-view justify-content-md-center">
+          <Route
+            exact
+            path="/"
+            render={() => {
+              if (!user)
+                return (
+                  <Col>
+                    <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
+                  </Col>
+                );
+              if (movies.length === 0) return <div className="main-view" />;
+              return <MoviesList movies={movies} />;
+              // return movies.map((m) => (
+              //   <Col md={3} key={m._id}>
+              //     <MovieCard movie={m} />
+              //   </Col>
+              // ));
+            }}
+          />
           <Route
             path="/login"
             render={() => {
@@ -157,8 +189,8 @@ render() {
                     <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
                   </Col>
                 );
-              if (movies.length === 0) return <div className="main-view" />;
-              if (!user) return <Redirect to="/" />;
+              //if (movies.length === 0) return <div className="main-view" />;
+              //if (!user) return <Redirect to="/" />;
               return (
                 <Col md={8}>
                   <ProfileView
@@ -200,3 +232,39 @@ render() {
     );
   }
 }
+
+let mapStateToProps = (store) => {
+  return {
+    movies: store.movies,
+    user: store.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setUser: (user) => {
+      dispatch(setUser(user));
+    },
+    setMovies: (movies) => {
+      dispatch(setMovies(movies));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainView);
+
+// let mapStateToProps = (state) => {
+//   return { movies: state.movies };
+// };
+// export default connect(mapStateToProps, { getMovies })(MainView);
+
+// MainView.propTypes = {
+//   setMovies: PropTypes.func.isRequired,
+//   movies: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       Title: PropTypes.string.isRequired,
+//       ImagePath: PropTypes.string.isRequired,
+//       Description: PropTypes.string.isRequired,
+//     })
+//   ).isRequired,
+// };
