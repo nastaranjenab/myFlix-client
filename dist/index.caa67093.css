@@ -1,7 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Anek+Tamil&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@1,200&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anek+Tamil&display=swap");
 .card-body,
 .container .card-custom {
-  background-color: #9f9f9f !important;
+  background-color: #110307 !important;
 }
 :root {
   background-color: #dbdbdb !important;
@@ -10,17 +12,17 @@
 h1,
 .link,
 .titles, .titles-expand {
-  color: #ffffff !important;
-  font-family: sans-serif, cursive !important;
+  color: #cf6dde !important;
+  font-family: "Lobster", cursive !important;
 }
 .navbar-brand .custom-icon,
 h1 .custom-icon,
 .link .custom-icon,
 .titles .custom-icon, .titles-expand .custom-icon {
-  color: #ffffff !important;
+  color: #b447cc !important;
 }
 .titles-expand:hover {
-  color: #2d3e2f !important;
+  color: #92461a !important;
 }
 .custom-form-label {
   color: #000000 !important;
@@ -41,24 +43,24 @@ p,
 }
 .app-container {
   background-color: #dbdbdb;
-  font-family: sans-serif !important;
+  font-family: "Anek Tamil", sans-serif !important;
 }
 .custom-btn {
-  background-color: #ffffff !important;
-  border-color: #ffffff !important;
-  color: #6a6a6a !important;
+  background-color: #f8d6fa !important;
+  border-color: #f8d6fa !important;
+  color: #141414 !important;
 }
 .custom-btn:hover {
-  background-color: #355e4f !important;
+  background-color: #6ddedc !important;
 }
 .custom-btn-delete {
-  background-color: #829b90 !important;
-  border-color: #829b90 !important;
+  background-color: #00abc1 !important;
+  border-color: #00abc1 !important;
 }
 .custom-btn-delete:hover {
   background-color: #3b756a !important;
 }
 .card {
-  border: 2px solid #ffffff !important;
+  border: 2px solid #b447cc !important;
 }
 /*# sourceMappingURL=index.caa67093.css.map */
