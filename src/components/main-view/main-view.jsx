@@ -1,7 +1,11 @@
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+
+import { setMovies, setUser } from "../../actions/actions";
+import MoviesList from '../movies-list/movies-list';
 
 //add react-bootstrap
 import Button from "react-bootstrap/Button";
@@ -15,7 +19,7 @@ import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 
 import { RegistrationView } from "../registration-view/registration-view";
 import { LoginView } from '../login-view/login-view';
-import { MovieCard } from '../movie-card/movie-card';
+//import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { Menubar } from '../navbar-view/navbar-view';
 import { DirectorView } from '../director-view/director-view';
@@ -29,11 +33,12 @@ export class MainView extends React.Component {
     super();
     this.state = {
       movies: [],
-      selectedMovie: null,
-      registered: null,
+      // selectedMovie: null,
+      // registered: null,
       user: null,
     };
   }
+  
  componentDidMount(){
       let accessToken = localStorage.getItem('token');
       if (accessToken !== null) {
@@ -61,12 +66,6 @@ getMovies(token) {
       });
   }
 
-  setSelectedMovie(newSelectedMovie) {
-    this.setState({
-      selectedMovie: newSelectedMovie,
-    });
-  }
-
 onLoggedIn(authData) {
   console.log(authData);
   this.setState({
@@ -88,27 +87,28 @@ onLoggedOut() {
 
 
 render() {
-  const { movies, selectedMovie, users, user, registered, director } =
-    this.state;
-  //console.log(this.props);
+  const { movies } = this.state;
+  let { user } = this.state;
 
   return (
     <Router>
       <Menubar user={user} />
       <Row className="main-view justify-content-md-center">
 
-        <Route exact path="/" render={() => {
-          if (!user) return <Col>
-            <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
-          </Col>
-          if (movies.length === 0) return <div className="main-view" />;
+        <Route
+                    exact
+                    path="/"
+                    render={() => {
+                      if (!user)
+                        return (
+                          <Col>
+                            <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
+                          </Col>
+                        );
+                      if (movies.length === 0) return <div className="main-view" />;
+                      return <MoviesList movies={movies} />;
 
-          return movies.map(m => (
-            <Col md={6} lg={4} key={m._id}>
-              <MovieCard movie={m} />
-            </Col>
-          ))
-        }} />
+                    }} />
           <Route
             path="/login"
             render={() => {
@@ -200,3 +200,23 @@ render() {
     );
   }
 }
+
+let mapStateToProps = (store) => {
+  return {
+    movies: store.movies,
+    user: store.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setUser: (user) => {
+      dispatch(setUser(user));
+    },
+    setMovies: (movies) => {
+      dispatch(setMovies(movies));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainView);

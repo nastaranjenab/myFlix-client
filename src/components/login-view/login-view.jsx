@@ -108,3 +108,11 @@ LoginView.propTypes = {
   // onRegister: PropTypes.func.isRequired,
   onLoggedIn: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps, { setUser })(LoginView);
