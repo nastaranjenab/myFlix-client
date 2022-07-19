@@ -24,7 +24,7 @@ import { MovieView } from '../movie-view/movie-view';
 import { Menubar } from '../navbar-view/navbar-view';
 import { DirectorView } from '../director-view/director-view';
 import { ProfileView } from '../profile-view/profile-view';
-import { GenreView } from '../director-view/director-view';
+import { GenreView } from '../genre-view/genre-view';
 import { Redirect } from "react-router-dom";
 import "../../index.scss";
 
