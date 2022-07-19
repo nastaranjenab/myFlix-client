@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
+import { connect } from 'react-redux';
+import { setUser } from "../../actions/actions";
 //add react-bootstrap
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
