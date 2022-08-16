@@ -1,4 +1,64 @@
-.my-flix {
-  color: steelblue;
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@1,200&display=swap");
+.card-body,
+.container .card-custom {
+  background-color: #9f9f9f !important;
+}
+:root {
+  background-color: #dbdbdb !important;
+}
+.navbar-brand,
+h1,
+.link,
+.titles, .titles-expand {
+  color: #ffffff !important;
+  font-family: sans-serif, cursive !important;
+}
+.navbar-brand .custom-icon,
+h1 .custom-icon,
+.link .custom-icon,
+.titles .custom-icon, .titles-expand .custom-icon {
+  color: #ffffff !important;
+}
+.titles-expand:hover {
+  color: #2d3e2f !important;
+}
+.custom-form-label {
+  color: #000000 !important;
+  background-color: #e6e6e6 !important;
+  font-weight: 700 !important;
+}
+.navbar-brand,
+.nav-link,
+.custom-card-title {
+  font-size: 1.7rem !important;
+}
+.navbar-brand {
+  font-size: 4rem !important;
+}
+p,
+.card-text {
+  color: #eeeeee;
+}
+.app-container {
+  background-color: #dbdbdb;
+  font-family: sans-serif !important;
+}
+.custom-btn {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+  color: #6a6a6a !important;
+}
+.custom-btn:hover {
+  background-color: #355e4f !important;
+}
+.custom-btn-delete {
+  background-color: #829b90 !important;
+  border-color: #829b90 !important;
+}
+.custom-btn-delete:hover {
+  background-color: #3b756a !important;
+}
+.card {
+  border: 2px solid #ffffff !important;
 }
 /*# sourceMappingURL=index.caa67093.css.map */
