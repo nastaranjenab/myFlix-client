@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import axios from "axios";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { Form, Button, Card, CardGroup, Container, Col, Row } from 'react-bootstrap';
+import './registration-view.scss';
+import axios from 'axios';
 
 //add react-bootstrap
 import Button from "react-bootstrap/Button";
@@ -138,7 +140,7 @@ export function RegistrationView(props) {
                   variant="primary"
                   className="custom-btn"
                   type="submit"
-                  onClick={handleSubmit}
+                  onClick={handleRegister}
                 >
                   Sign me up!
                 </Button>
