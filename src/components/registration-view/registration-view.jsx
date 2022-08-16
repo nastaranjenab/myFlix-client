@@ -56,30 +56,31 @@ export function RegistrationView(props) {
     return isReq;
   };
 
-  const handleSubmit = (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
+    console.log(username, password, email, birthday);
+    /* Send a request to the server for authentication
+       then call props on registerd user (username) */
     const isReq = validate();
     if (isReq) {
-      /* Send request to the server for authentication */
-      axios
-        .post("https://movieflexworld.herokuapp.com/users", {
-          Username: Username,
-          Password: Password,
-          Email: Email,
-          Birthday: Birthday,
-        })
-        .then((response) => {
-          const data = response.data;
-          console.log(data);
-          alert("Registration successful, please login!");
-          window.open("/", "_self");
-        })
-        .catch((response) => {
-          alert("error registering the user");
-          window.open("/", "_self");
+        axios.post('https://movieflexworld.herokuapp.com/users', {
+            Username: username,
+            Password: password,
+            Email: email,
+            Birthday: birthday
+        }).then(response => {
+            const data = response.data;
+            console.log(data);
+            alert("Successfully registreation. You can now precced to login.");
+            window.open('/', '_self');
+            // The Second argument '_self' is necessary so that the page will open inthe current tab.
+        }).catch((response) => {
+            console.error(response);
+            alert('ERROR user registering');
         });
     }
-  };
+};
+
   return (
     <Row>
       <Col med={4}>
