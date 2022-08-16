@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { Form, Button, Card, CardGroup, Container, Col, Row } from 'react-bootstrap';
-import './registration-view.scss';
-import axios from 'axios';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import axios from "axios";
 
 //add react-bootstrap
 import Button from "react-bootstrap/Button";
@@ -58,31 +56,30 @@ export function RegistrationView(props) {
     return isReq;
   };
 
-  const handleRegister = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(username, password, email, birthday);
-    /* Send a request to the server for authentication
-       then call props on registerd user (username) */
     const isReq = validate();
     if (isReq) {
-        axios.post('https://movieflexworld.herokuapp.com/users', {
-            Username: username,
-            Password: password,
-            Email: email,
-            Birthday: birthday
-        }).then(response => {
-            const data = response.data;
-            console.log(data);
-            alert("Successfully registreation. You can now precced to login.");
-            window.open('/', '_self');
-            // The Second argument '_self' is necessary so that the page will open inthe current tab.
-        }).catch((response) => {
-            console.error(response);
-            alert('ERROR user registering');
+      /* Send request to the server for authentication */
+      axios
+        .post("https://movieflexworld.herokuapp.com/users", {
+          Username: Username,
+          Password: Password,
+          Email: Email,
+          Birthday: Birthday,
+        })
+        .then((response) => {
+          const data = response.data;
+          console.log(data);
+          alert("Registration successful, please login!");
+          window.open("/", "_self");
+        })
+        .catch((response) => {
+          alert("error registering the user");
+          window.open("/", "_self");
         });
     }
-};
-
+  };
   return (
     <Row>
       <Col med={4}>
@@ -140,7 +137,7 @@ export function RegistrationView(props) {
                   variant="primary"
                   className="custom-btn"
                   type="submit"
-                  onClick={handleRegister}
+                  onClick={handleSubmit}
                 >
                   Sign me up!
                 </Button>
